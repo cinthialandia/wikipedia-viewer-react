@@ -63,7 +63,7 @@ function App() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Click here for random link
+            Click here to read a random article
           </a>
         </div>
         <Form className="form-input">
@@ -78,7 +78,11 @@ function App() {
       </header>
       <div className="container-result">
         {loading ? (
-          <Spinner className="loading" animation="border" variant="secondary" />
+          <Spinner
+            className="loading"
+            animation="border"
+            style={{ color: "#3d2645" }}
+          />
         ) : (
           results.map(({ title, snippet, pageid }) => (
             <Card key={pageid} className="result">
