@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import { debounce } from "debounce";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
+import Spinner from "react-bootstrap/Spinner";
 import "./App.scss";
 
 interface Result {
@@ -35,7 +36,7 @@ function App() {
       let response = await fetch(`${baseURL}${keyword}`);
       let results = (await response.json()) as Results;
       let arrResults = results.query.search;
-      console.log(arrResults);
+
       setResults(arrResults);
       setLoading(false);
     }, 700),
@@ -50,7 +51,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Wikipedia Viewer</h1>
+        <h1>Wikipedia Viewer 🌎</h1>
         <div className="random-link">
           <a
             href="https://en.wikipedia.org/wiki/Special:Random"
@@ -71,25 +72,27 @@ function App() {
         </Form>
       </header>
       <div className="container-result">
-        {loading
-          ? "Loading..."
-          : results.map(({ title, snippet, pageid }) => (
-              <Card key={pageid} className="result">
-                <div key={pageid}>
-                  <a
-                    href={`https://en.wikipedia.org/?curid=${pageid}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Card.Title className="title-result">{title}</Card.Title>
-                    <Card.Text
-                      className="info-result"
-                      dangerouslySetInnerHTML={{ __html: snippet }}
-                    ></Card.Text>
-                  </a>
-                </div>
-              </Card>
-            ))}
+        {loading ? (
+          <Spinner className="loading" animation="border" variant="secondary" />
+        ) : (
+          results.map(({ title, snippet, pageid }) => (
+            <Card key={pageid} className="result">
+              <div key={pageid}>
+                <a
+                  href={`https://en.wikipedia.org/?curid=${pageid}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Card.Title className="title-result">{title}</Card.Title>
+                  <Card.Text
+                    className="info-result"
+                    dangerouslySetInnerHTML={{ __html: snippet }}
+                  ></Card.Text>
+                </a>
+              </div>
+            </Card>
+          ))
+        )}
       </div>
     </div>
   );
