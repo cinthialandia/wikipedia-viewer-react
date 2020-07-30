@@ -51,7 +51,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Wikipedia Viewer 🌎</h1>
+        <h1>
+          Wikipedia Viewer
+          <span aria-label="world" role="img">
+            🌎
+          </span>
+        </h1>
         <div className="random-link">
           <a
             href="https://en.wikipedia.org/wiki/Special:Random"
