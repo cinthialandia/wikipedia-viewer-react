@@ -35,6 +35,7 @@ function App() {
       let response = await fetch(`${baseURL}${keyword}`);
       let results = (await response.json()) as Results;
       let arrResults = results.query.search;
+      console.log(arrResults);
       setResults(arrResults);
       setLoading(false);
     }, 700),
@@ -61,6 +62,7 @@ function App() {
         </div>
         <Form className="form-input">
           <Form.Control
+            className="input"
             autoComplete="off"
             type="text"
             placeholder="Search"
@@ -72,20 +74,18 @@ function App() {
         {loading
           ? "Loading..."
           : results.map(({ title, snippet, pageid }) => (
-              <Card border="secondary">
-                <div className="result" key={pageid}>
+              <Card key={pageid} className="result">
+                <div key={pageid}>
                   <a
                     href={`https://en.wikipedia.org/?curid=${pageid}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Card.Header className="title-result">{title}</Card.Header>
-                    <Card.Body>
-                      <p
-                        className="info-result"
-                        dangerouslySetInnerHTML={{ __html: snippet }}
-                      ></p>
-                    </Card.Body>
+                    <Card.Title className="title-result">{title}</Card.Title>
+                    <Card.Text
+                      className="info-result"
+                      dangerouslySetInnerHTML={{ __html: snippet }}
+                    ></Card.Text>
                   </a>
                 </div>
               </Card>
